@@ -52,39 +52,7 @@ required.
 
 ### Simplified Block Diagram
 
-``` text
-                 +-----------------------------------+
-                 |          8086 MICROPROCESSOR     |
-                 |                                   |
-Memory / I/O <-->+-----------------------------------+<--> System Bus
-                 |       Bus Interface Unit (BIU)    |
-                 |  +-----------------------------+  |
-                 |  | Segment Registers            |  |
-                 |  | CS, DS, SS, ES               |  |
-                 |  +-----------------------------+  |
-                 |  | Instruction Pointer (IP)     |  |
-                 |  +-----------------------------+  |
-                 |  | 6-byte Instruction Queue     |  |
-                 |  +-----------------------------+  |
-                 |  | Address Generation / Bus     |  |
-                 |  | Control                      |  |
-                 |  +---------------+-------------+  |
-                 |                  |                |
-                 |       Instruction/Data Interface  |
-                 |                  |                |
-                 |       Execution Unit (EU)         |
-                 |  +-----------------------------+  |
-                 |  | Instruction Decoder &       |  |
-                 |  | Control Circuitry           |  |
-                 |  +-----------------------------+  |
-                 |  | ALU                         |  |
-                 |  +-----------------------------+  |
-                 |  | AX, BX, CX, DX               |  |
-                 |  | SP, BP, SI, DI               |  |
-                 |  | Flag Register                |  |
-                 |  +-----------------------------+  |
-                 +-----------------------------------+
-```
+<img width="578" height="372" alt="image" src="https://github.com/user-attachments/assets/7c5e36eb-c7f0-450a-9210-ac5b7fd9a5d6" />
 
 ### Working Principle
 
@@ -112,27 +80,26 @@ from one register to another and store the result in memory.
 
 ### Assembly Program
 
-``` asm
 .MODEL SMALL
 .STACK 100H
 
 .DATA
-    RESULT DW 0000H
+    RESULT DW ?
 
 .CODE
 MAIN PROC
     MOV AX, @DATA
     MOV DS, AX
 
-    MOV AX, 1234H       ; Load 16-bit value into AX
-    MOV BX, AX          ; Copy AX into BX
-    MOV RESULT, BX      ; Store BX in memory
+    MOV AX, 1234H
+    MOV BX, AX
+    MOV RESULT, BX
 
     MOV AH, 4CH
     INT 21H
 MAIN ENDP
-END MAIN
-```
+END MAIN            screen shot of the output<img width="1536" height="1024" alt="ChatGPT Image Oct 27, 2026, 04_45_50 PM" src="https://github.com/user-attachments/assets/f6aa2e4d-f01d-457e-8a3d-912e1db7bf31" />
+
 
 ### Expected Result
 
@@ -165,8 +132,30 @@ Write an 8086 assembly language program to exchange the contents of two
 5.  Stop the program.
 
 ### Assembly Program
+.MODEL SMALL
+.STACK 100H
 
- 
+.DATA
+    NUM1 DW 1234H
+    NUM2 DW 5678H
+
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV AX, NUM1
+    MOV BX, NUM2
+
+    MOV NUM1, BX
+    MOV NUM2, AX
+
+    MOV AH, 4CH
+    INT 21H
+MAIN ENDP
+END MAIN
+
+
 
 ### Expected Result
 
@@ -191,6 +180,7 @@ Write an 8086 assembly language program to exchange the contents of two
 7.  Record the observed results and compare them with the expected
     results.
 ## Screenshot of the results 
+<img width="1536" height="1024" alt="ChatGPT Image Oct 27, 2026, 04_49_22 PM" src="https://github.com/user-attachments/assets/baad4c20-c04a-4cf7-a827-5cbce2e3d1a5" />
 
 
 
